@@ -7,12 +7,12 @@ import useStyles from './styles';
 import { createPost, updatePost } from '../../actions/posts';
 
 const Form = ({ currentId, setCurrentId }) => {
-  console.log(setCurrentId);
+ // console.log(setCurrentId);
   const [postData, setPostData] = useState({ author: '', title: '', message: '', tags: '', selectedFile: '' });
   const post = useSelector((state) => (currentId ? state.posts.find((message) => message._id === currentId) : null));
   const dispatch = useDispatch();
   const classes = useStyles();
-
+  console.log(post);
   useEffect(() => {
     if (post) setPostData(post);
   }, [post]);
@@ -25,10 +25,12 @@ const Form = ({ currentId, setCurrentId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (currentId === 0) {
+    if (currentId === null) {
       dispatch(createPost(postData));
-      clear();
+      console.log("I'm in createPost");
+     clear();
     } else {
+      console.log("I'm in updatePost");
       dispatch(updatePost(currentId, postData));
       clear();
     }
